@@ -11,7 +11,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "accounts")
 public class Account {
 
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
+    private int id;
+    @DatabaseField
     private String name;
     @DatabaseField
     private String password;
@@ -34,5 +36,11 @@ public class Account {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 }
