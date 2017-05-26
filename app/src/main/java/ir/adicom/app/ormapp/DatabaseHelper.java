@@ -20,11 +20,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "helloAndroid.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // the DAO object we use to access the Account table
     private Dao<Account, Integer> simpleDao = null;
-    private RuntimeExceptionDao<Account, Integer> simpleRuntimeDao = null;
+    private RuntimeExceptionDao<Account, String> simpleRuntimeDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -47,7 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
 
         // here we try inserting data in the on-create as a test
-        RuntimeExceptionDao<Account, Integer> dao = getSimpleDataDao();
+        RuntimeExceptionDao<Account, String> dao = getSimpleDataDao();
         long millis = System.currentTimeMillis();
         // create some entries in the onCreate
         Account account = new Account("admin","123");
@@ -91,7 +91,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our Account class. It will
      * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
      */
-    public RuntimeExceptionDao<Account, Integer> getSimpleDataDao() {
+    public RuntimeExceptionDao<Account, String> getSimpleDataDao() {
         if (simpleRuntimeDao == null) {
             simpleRuntimeDao = getRuntimeExceptionDao(Account.class);
         }

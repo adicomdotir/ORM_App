@@ -4,11 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DatabaseHelper db = new DatabaseHelper(this);
-        RuntimeExceptionDao<Account, Integer> simpleDao = db.getSimpleDataDao();
+        RuntimeExceptionDao<Account, String> simpleDao = db.getSimpleDataDao();
         // query for all of the data objects in the database
         List<Account> list = simpleDao.queryForAll();
         // our string builder for building the content-view
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         sb.append("------------------------------------------\n");
         sb.append("Deleted ids:");
         for (Account simple : list) {
-            //simpleDao.delete(simple);
+            simpleDao.delete(simple);
             sb.append(' ').append(simple.getName());
             Log.i(LOG_TAG, "deleting simple(" + simple.getName() + ")");
             simpleC++;
